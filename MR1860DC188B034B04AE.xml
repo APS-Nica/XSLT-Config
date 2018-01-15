@@ -1,0 +1,418 @@
+<?xml version="1.0"?>
+<xsl:stylesheet
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
+    <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
+    <!--
+
+Franklin Energy
+Bulkposter@FranklinEnergyServicesMI.com = ED3V7SH6V3L7RBH3HKK6
+=
+
+Feed:
+https://app.jobvite.com/CompanyJobs/Xml.aspx?c=qWCaVfwn&cf=e
+
+-->
+    <xsl:template match="*">
+        <xsl:variable name="q">"</xsl:variable>
+        <xsl:variable name="lsq">&#x201C;</xsl:variable>
+        <xsl:variable name="rsq">&#x201D;</xsl:variable>
+        <xsl:variable name="sq">'</xsl:variable>
+        <xsl:variable name="rssq">&#x2019;</xsl:variable>
+        <xsl:variable name="lf"/>
+        <xsl:variable name="brtag">
+            <BR/>
+        </xsl:variable>
+        <xsl:element name="Batch">
+            <xsl:element name="Header">
+                <Field name="CBVendorID" value="ED3V7SH6V3L7RBH3HKK6"/>
+                <Field name="CBOrigin" value="jobvite-CustomXSL"/>
+                <Field name="CBReplace" value="Yes"/>
+                <Field name="CBEmailPref" value="EmailOnlyIfErrors"/>
+                <Field name="CBReplyTo" value="dpisupport@careerbuilder.com"/>
+            </xsl:element>
+            <xsl:for-each select="job">
+                <xsl:element name="Job">
+                    <Field name="CBAction" value="Add"/>
+                    <Field name="CBProductID" value="JCPRV0"/>
+                    <Field name="CBContactCompany" value="Franklin Energy"/>
+                    <xsl:variable name="JobID" select="normalize-space(id)"/>
+                    <xsl:variable name="JobDescription" select="normalize-space(description)"/>
+                    <xsl:variable name="JobTitle" select="normalize-space(title)"/>
+                    <xsl:variable name="JobURL" select="normalize-space(detail-url)"/>
+                    <xsl:variable name="Location" select="normalize-space(location)"/>
+                    <xsl:variable name="City" select="substring-before(location,',')"/>
+                    <xsl:variable name="State" select="substring-before(substring-after(location,','),',')"/>
+                    <xsl:variable name="Country" select="substring-after(substring-after(location,','),',')"/>
+                    <xsl:element name="Field">
+                        <xsl:attribute name="name">CBUserJobID</xsl:attribute>
+                        <xsl:attribute name="value">
+                            <xsl:value-of select="concat('TN~', $JobID)"/>
+                        </xsl:attribute>
+                    </xsl:element>
+                    <xsl:element name="Field">
+                        <xsl:attribute name="name">CBDisplayJobID</xsl:attribute>
+                        <xsl:attribute name="value">
+                            <xsl:value-of select="$JobID"/>
+                        </xsl:attribute>
+                    </xsl:element>
+                    <xsl:element name="Field">
+                        <xsl:attribute name="name">CBDescription</xsl:attribute>
+                        <xsl:attribute name="value">
+                            <xsl:value-of select="$JobDescription"/>
+                        </xsl:attribute>
+                    </xsl:element>
+                    <xsl:element name="Field">
+                        <xsl:attribute name="name">CBCity</xsl:attribute>
+                        <xsl:attribute name="value">
+                            <xsl:value-of select="$City"/>
+                        </xsl:attribute>
+                    </xsl:element>
+                    <xsl:element name="Field">
+                        <xsl:attribute name="name">CBState</xsl:attribute>
+                        <xsl:attribute name="value">
+                            <xsl:value-of select="normalize-space($State)"/>
+                        </xsl:attribute>
+                    </xsl:element>
+                    <xsl:element name="Field">
+                        <xsl:attribute name="name">CBCountry</xsl:attribute>
+                        <xsl:attribute name="value">
+                            <xsl:choose>
+                                <xsl:when test="contains($Country, 'United States')">US</xsl:when>
+                                <xsl:otherwise/>
+                            </xsl:choose>
+                        </xsl:attribute>
+                    </xsl:element>
+                    <xsl:element name="Field">
+                        <xsl:attribute name="name">CBApplyURL</xsl:attribute>
+                        <xsl:attribute name="value">
+                            <xsl:value-of select="concat($JobURL,'&amp;s=Careerbuilder')"/>
+                        </xsl:attribute>
+                    </xsl:element>
+                    <xsl:element name="Field">
+                        <xsl:attribute name="name">CBJobTitle</xsl:attribute>
+                        <xsl:attribute name="value">
+                            <xsl:value-of select="$JobTitle"/>
+                        </xsl:attribute>
+                    </xsl:element>
+                    <xsl:element name="Field">
+                        <xsl:attribute name="name">CBJobTypeCode</xsl:attribute>
+                        <xsl:attribute name="value">
+                            <xsl:choose>
+                                <xsl:when test="contains($JobTitle, 'Admin')">JN002</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Finance')">JN005</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Research')">JN026</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Legal')">JN030</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Technician')">JN013</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Quality')">JN025</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Accounting')">JN001</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Manager')">JN037</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Customer Service')">JN003</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Sales')">JN011</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Facilities')">JN017</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Business')">JN006</xsl:when>
+                                <!--New Categories-->
+                                <xsl:when test="contains($JobTitle, 'Accounting')">JN001</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Admin')">JN002</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Clerical')">JN002</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Admin - Clerical')">JN002</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Automotive')">JN054</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Banking')">JN038</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Biotech')">JN053</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Business Development')">JN019</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Business Opportunity')">JN059</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Construction')">JN043</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Consultant')">JN020</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Customer Service')">JN003</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Design')">JN021</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Shipping')">JN027</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Distribution')">JN027</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Distribution - Shipping')">JN027</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Education')">JN031</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Engineering')">JN004</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Entry Level')">JN022</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Executive')">JN018</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Facilities')">JN017</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Finance')">JN005</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Franchise')">JN060</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'General Business')">JN006</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'General Labor')">JN051</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Government')">JN046</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Government - Federal')">JN070</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Grocery')">JN055</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Health Care')">JN023</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Hospitality - Hotel')">JN040</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Human Resources')">JN007</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Information Technology')">JN008</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Installation - Maint - Repair')">JN056</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Inventory')">JN015</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Legal')">JN030</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Legal Admin')">JN041</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Management')">JN037</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Manufacturing')">JN029</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Marketing')">JN009</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Media')">JN047</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Journalism')">JN047</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Newspaper')">JN047</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Journalism - Newspaper')">JN047</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Media - Journalism - Newspaper')">JN047</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Nonprofit - Social Services')">JN058</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Nurse')">JN050</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Other')">JN010</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Pharmaceutical')">JN049</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Professional Services')">JN024</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Purchasing - Procurement')">JN016</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'QA')">JN025</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Quality Manager')">JN025</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'QA - Quality Control')">JN025</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Real Estate')">JN057</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Research')">JN026</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Restaurant - Food Service')">JN035</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Retail')">JN033</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Sales')">JN011</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Science')">JN012</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Skilled Labor - Trades')">JN013</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Strategy')">JN028</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Planning')">JN028</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Strategy - Planning')">JN028</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Supply Chain')">JN014</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Telecommunications')">JN048</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Training')">JN032</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Transportation')">JN044</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Veterinary Services')">JN069</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Warehouse')">JN045</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Administrator')">JN037</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Electrician')">JN013</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'HealthCare')">JN023</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Insurance')">JN034</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Professional Service')">JN024</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Driver')">JN044</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Engineer')">JN004</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Specialist')">JN037</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Manager')">JN037</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Technician')">JN013</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Plumbing')">JN013</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Installer')">JN056</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Superintendent')">JN037</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Mechanic')">JN004</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Operator')">JN037</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Carpenter')">JN013</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Plumbing,Technician')">JN013</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Foreman')">JN013</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Programmer')">JN008</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Laborer')">JN013</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Assistant')">JN018</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Cashier')">JN038</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Teacher')">JN031</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Lead')">JN037</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'System Analyst')">JN004</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Maintenance')">JN056</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Painter')">JN013</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Safety And Health')">JN023</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Bartender')">JN013</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Craftsman')">JN013</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Financial')">JN005</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Administrative')">JN037</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Electrical ')">JN013</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Call Center')">JN022</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Data Entry')">JN022</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Production')">JN045</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Machine')">JN051</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Lawncare')">JN051</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'dishwasher')">JN013</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Designer')">JN021</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Clinical')">JN023</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Medical')">JN023</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Developer')">JN008</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Dev')">JN008</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Auditor')">JN001</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Quality')">JN025</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Clinical Quality')">JN023</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Medication Aide')">NN050</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Care Attendant')">JN018</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Cook')">JN035</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Receptionist')">JN003</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Aide')">JN018</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Dining Services')">JN035</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Director')">JN037</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Health Aide')">JN023</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Personal Care Aide')">JN018</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Business')">JN019</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Diet Aide')">JN018</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Activities Aide')">JN018</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Accountant')">JN001</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Resident Aide')">JN018</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'RN')">JN050</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'chef')">JN035</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Hospice Aide')">JN023</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Therapist')">JN023</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Plumber')">JN013</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Tech')">JN013</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Assisted Living ')">JN018</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Nursing Asst')">JN050</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Billing Analyst')">JN001</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Patient Care')">JN050</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Patient Observer')">JN050</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Accounts Representative')">JN001</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Practical Nu')">JN050</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Hospice Care')">JN050</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Transporter')">JN044</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Expo')">JN024</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Host')">JN024</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Hostesses')">JN024</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Bussers')">JN035</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Line Cooks')">JN035</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Servers')">JN035</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Kitchen Supervisor')">JN035</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Supervisor')">JN037</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Human Resource')">JN007</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Operations')">JN013</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Courier')">JN044</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Learning &amp; Development')">JN019</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Supply Chain &amp; Logistics')">JN014</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Technical Support')">JN003</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Product Manager')">JN037</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'UX Designer')">JN028</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Security')">JN051</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Product')">JN028</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Software')">JN008</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Compliance')">JN025</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Application Security Program Manager')">JN008</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Trader')">JN013</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Project Manager')">JN037</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Network')">JN008</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'System Test')">JN008</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Data Center')">JN008</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Automation Test Engineer')">JN008</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'System')">JN008</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'DevOps')">JN008</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Toll Operations')">JN003</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Manufacturing and Operations')">JN029</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Administrative and Support')">JN002</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Advisor')">JN020</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Hospitality')">JN040</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Clinical Liaison')">JN023</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Data Analyst')">JN008</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Specialty Intake Coordinator')">JN023</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Patient Services Representative Intake')">JN023 </xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Enteral Technician Lead Intake')">JN003</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Business Analyst')">JN008</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'IT Technician')">JN008</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Rehab Technician')">JN023</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Patient Service Lead')">JN003</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Compounding Pharmacy Technician Part - Time')">JN049</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Infusion RN Per Diem')">JN050</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Pharmacy Technician Clinical Support')">JN049</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Infusion RN Full Time')">JN050</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Infusion RN Part Time')">JN050 </xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Evening Pediatric Infusion RN')">JN050</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Pharmacy Technician  Clinical Support')">JN049 </xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Pharmacist Per Diem')">JN049</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Temporary Senior Financial Analyst')">JN005</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Warehouse Coordinator')">JN045</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Clinical Support Technician')">JN049</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Infusion Reimbursement Specialist')">JN005</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Patient Customer Service Representative (Intake)')">JN003</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'SQL DBA / BI Developer')">JN008</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Patient Services Professional')">JN003</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Part - time Clinical Registered Dietitian')">JN023</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'IT Senior Systems Engineer')">JN008</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Patient Service Specialist')">JN003 </xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Customer Service -  Nutrition')">JN003</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Development Operations / Application Support')">JN008 </xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Clinical Registered Dietitian')">JN023</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Patient Service Associate')">JN003 </xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Dispatcher')">JN027</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Per Diem Patient Service Associate')">JN003</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Reimbursement Specialist')">JN005</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Learning and Development Manager')">JN003</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Distribution Supervisor')">JN027</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Respiratory Care Coordinator')">JN003</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Patient Sevice Associate')">JN003</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Temporary Patient Service Associate')">JN003</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Part Time Respiratory Therapist')">JN023</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Customer Care Compliance Specialist')">JN023</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Distribution Assistant')">JN027</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Respiratory Therapist')">JN023 </xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Rehab Specialist')">JN003 </xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Per Diem Respiratory Therapist')">JN023</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Revenue Support Representative')">JN003</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Medical Records Coordinator')">JN002</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Respiratory Therapist Per Diem')">JN023 </xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Customer Service Technician')">JN003 </xsl:when>
+                                <xsl:when test="contains($JobTitle, 'FirestoneBuildingProducts')">JN043</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Accounting/Finance')">JN001</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Administrative/Clerical')">JN002</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Architecture and Engineering')">JN021</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Automotive Technician')">JN054</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Building and Grounds Cleaning and Maintenance')">JN017</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Co-Op')">JN054</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Corporate')">JN037</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Customer Service/Support')">JN003</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Distribution-Shipping')">JN027</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Engineering')">JN004</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Finance')">JN005</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Human Resources')">JN007</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Information Technology')">JN008</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Internship')">JN054</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Legal')">JN030</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Legal Administration')">JN041</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Management')">JN037</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Manufacturing')">JN029</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Marketing')">JN009</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Mining')">JN010</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Office and Administrative Support')">JN002</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Other')">JN010</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Plant Hourly')">JN010</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Plant Salary')">JN010</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Plant Maintenance')">JN010</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Production')">JN010</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Public Relations')">JN010</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Purchasing')">JN016</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Purchasing-Procurement')">JN016</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Real Estate')">JN057</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Research')">JN026</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Retail Sales')">JN033</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Retread')">JN013</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Sales')">JN011</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Store Management')">JN037</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Supply Chain')">JN014</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Training')">JN032</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Travel')">JN010</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Warehouse')">JN045</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Clerk')">JN037</xsl:when>
+                                <xsl:when test="contains($JobTitle, 'Coordinator')">JN037</xsl:when>
+                                <!--End Of New Categories-->
+                                <xsl:otherwise>JN010</xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:attribute>
+                    </xsl:element>
+                    <!-- EOJ-->
+                </xsl:element>
+                <!-- End of CB Job node -->
+            </xsl:for-each>
+            <!-- End of BM job node -->
+        </xsl:element>
+        <!-- End of Batch -->
+    </xsl:template>
+    <xsl:template name="replace_sab">
+        <!-- with string s, replace substring a by string b -->
+        <!-- s, a and b are parameters determined upon calling  -->
+        <xsl:param name="s"/>
+        <xsl:param name="a"/>
+        <xsl:param name="b"/>
+        <xsl:choose>
+            <xsl:when test="contains($s,$a)">
+                <xsl:value-of select="substring-before($s,$a)"/>
+                <xsl:copy-of select="$b"/>
+                <xsl:call-template name="replace_sab">
+                    <xsl:with-param name="s" select="substring-after($s,$a)"/>
+                    <xsl:with-param name="a" select="$a"/>
+                    <xsl:with-param name="b" select="$b"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$s"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+</xsl:stylesheet>
